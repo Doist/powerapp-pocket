@@ -1,4 +1,4 @@
-Service for Todoist -> Pocket integration
+Service for Todoist to Pocket integration
 -----------------------------------------
 
 This app creates a new project in your Todoist account and starts
@@ -16,11 +16,11 @@ installationon getpocket.
 
 Then follow instructions for Heroku or self-hosted installations.
 
-Installation instructions for Heroku installation
--------------------------------------------------
+Installation instructions for Heroku
+------------------------------------
 
 Extend your configuration with two variables. `POWERAPP_SERVICES` has to be
-extended with the git URL of the repository: `git@github.com:Doist/powerapp-pocket.git`.
+extended with the URL of the repository on github: `https://github.com/Doist/powerapp-pocket`.
 
 Create a new variable with this name if it doesn't exist yet.
 Then create a `POCKET_CONSUMER_KEY` key with a variable copied from your
@@ -28,7 +28,7 @@ Pocket settings.
 
 It can be done either from command line::
 
-    heroku config:set POWERAPP_SERVICES=git@github.com:Doist/powerapp-pocket.git
+    heroku config:set POWERAPP_SERVICES=https://github.com/Doist/powerapp-pocket
     heroku config:set POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
 
 Or from Heroku web interface:
@@ -42,7 +42,7 @@ Installation instructions for local of self-hosted installation
 
 Install the extension in your development virtual environment::
 
-    pip install -e git@github.com:Doist/powerapp-pocket.git
+    pip install -e git+https://github.com/Doist/powerapp-pocket#egg=powerapp-pocket
 
 Extend your `.env` file with a string like::
 
