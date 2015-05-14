@@ -1,59 +1,58 @@
-The getpocket.com integration
------------------------------
+Service for Todoist -> Pocket integration
+-----------------------------------------
 
 This app creates a new project in your Todoist account and starts
 monitoring tasks in it. As soon as you create a task there
 (or move the task from other projects), URLs from it will be extracted and added to your
 pocket account.
 
+In order to install the service, log in to your Pocket account and create
+a new application here: http://getpocket.com/developer/apps/new .
+
+Notice the "consumer key" created for you. It will be required to identify your PowerApp
+installationon getpocket.
+
+.. image:: powerapp_pocket/static/powerapp_pocket/getpocket_consumer_key.png
+
+Then follow instructions for Heroku or self-hosted installations.
 
 Installation instructions for Heroku installation
 -------------------------------------------------
 
-1. Log in to your getpocket account and create a new application here:
-   http://getpocket.com/developer/apps/new . Notice the "consumer key"
-   created for you. It will be required to identify your PowerApp installation
-   on getpocket.
+Extend your configuration with two variables. `POWERAPP_SERVICES` has to be
+extended with the git URL of the repository: `git@github.com:Doist/powerapp-pocket.git`.
 
-   .. image:: powerapp_pocket/static/powerapp_pocket/getpocket_consumer_key.png
+Create a new variable with this name if it doesn't exist yet.
+Then create a `POCKET_CONSUMER_KEY` key with a variable copied from your
+Pocket settings.
 
-2. Extend your configuration with two variables. `POWERAPP_SERVICES` has to be
-   extended with the git URL of the repository: `git@github.com:Doist/powerapp-pocket.git`.
-   Create a new variable with this name if it doesn't exist yet.
-   Then create a `POCKET_CONSUMER_KEY` key with a variable copied from your
-   Pocket settings.
+It can be done either from command line::
 
-   It can be done either from command line::
+    heroku config:set POWERAPP_SERVICES=git@github.com:Doist/powerapp-pocket.git
+    heroku config:set POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
 
-        heroku config:set POWERAPP_SERVICES=git@github.com:Doist/powerapp-pocket.git
-        heroku config:set POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
+Or from Heroku web interface:
 
-   Or from Heroku web interface:
-
-    .. image:: powerapp_pocket/static/powerapp_pocket/heroku_config_variables.png
+.. image:: powerapp_pocket/static/powerapp_pocket/heroku_config_variables.png
 
 
 
 Installation instructions for local of self-hosted installation
 ---------------------------------------------------------------
 
-1. Log in to your getpocket account and create a new application here:
-   http://getpocket.com/developer/apps/new
+Install the extension in your development virtual environment::
 
-2. Copy the "consumer key" value from your application and create a new key
-   `POCKET_CONSUMER_KEY` holding this value.
+    pip install -e git@github.com:Doist/powerapp-pocket.git
 
-   .. image:: powerapp_pocket/static/powerapp_pocket/getpocket_consumer_key.png
+Extend your `.env` file with a string like::
 
-   For local installations extend your `.env` file with a string like::
+    POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
 
-        POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
+Collect static and services::
 
-   For Heroku installation, update the settings of your installation, either
-   from the command line::
+    ./manage.py collectstatic --noinput
+    ./manage.py collect_services
 
-        heroku config:set POCKET_CONSUMER_KEY=XXXXX-XXXXXXXXXXXXXXXXX
+Start (or restart) the uwsgi process::
 
-   Or from their web interface. Just add variables and apply your changes.
-
-    .. image:: powerapp_pocket/static/powerapp_pocket/heroku_config_variables.png
+    uwsgi uwsgi.ini
