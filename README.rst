@@ -10,7 +10,7 @@ In order to install the service, log in to your Pocket account and create
 a new application here: http://getpocket.com/developer/apps/new .
 
 Notice the "consumer key" created for you. It will be required to identify your PowerApp
-installationon getpocket.
+installation on Pocket.
 
 .. image:: powerapp_pocket/static/powerapp_pocket/getpocket_consumer_key.png
 
@@ -37,8 +37,8 @@ Or from Heroku web interface:
 
 
 
-Installation instructions for local of self-hosted installation
----------------------------------------------------------------
+Installation instructions for local of self-hosted setups
+---------------------------------------------------------
 
 Install the extension in your development virtual environment::
 
