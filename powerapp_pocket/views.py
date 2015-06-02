@@ -5,7 +5,7 @@ import requests
 from django.conf import settings
 from django.shortcuts import render, redirect
 from powerapp.core import django_forms, generic_views
-from powerapp.core.models.oauth import AccessToken, EMPTY_SCOPE
+from powerapp.core.models.oauth import OAuthToken
 from powerapp.core.web_utils import extend_qs
 
 # getpocket API settings
@@ -63,7 +63,7 @@ def authorize_pocket_done(request):
         return render(request, 'powerapp_pocket/authorize_pocket_done.html', {'error': error})
 
     access_token = resp.json()['access_token']
-    AccessToken.register(request.user, 'pocket', EMPTY_SCOPE, access_token)
+    OAuthToken.register(request.user, 'pocket', access_token)
 
     redirect_target = request.session.pop('pocket_auth_redirect', None)
     if not redirect_target:

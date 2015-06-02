@@ -4,7 +4,7 @@ from logging import getLogger
 from django.conf import settings
 from django.dispatch.dispatcher import receiver
 from .apps import AppConfig
-from powerapp.core.models.oauth import AccessToken
+from powerapp.core.models.oauth import OAuthToken
 from powerapp.core.todoist_utils import get_personal_project, extract_urls
 from powerapp_pocket.views import POCKET_ADD_URL_ENDPOINT
 
@@ -24,7 +24,7 @@ def on_task_added_edited(sender, integration=None, obj=None, **kw):
 
 
 def process_item(integration, item):
-    access_token_obj = AccessToken.objects.filter(
+    access_token_obj = OAuthToken.objects.filter(
         user=integration.user, client='pocket').first()
     if not access_token_obj:
         logger.warning('Pocket token for %s not found' % integration.user)
