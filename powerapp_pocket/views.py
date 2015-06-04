@@ -6,7 +6,7 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from powerapp.core import django_forms, generic_views
 from powerapp.core.models.oauth import OAuthToken
-from powerapp.core.web_utils import extend_qs
+from powerapp.core.web_utils import extend_qs, build_absolute_uri
 
 # getpocket API settings
 POCKET_REQUEST_ENDPOINT = 'https://getpocket.com/v3/oauth/request'
@@ -26,18 +26,17 @@ class EditIntegrationView(generic_views.EditIntegrationView):
     def access_token_redirect(self, request):
         request.session['pocket_auth_redirect'] = request.path
         return redirect('powerapp_pocket:authorize_pocket')
-        
 
 @login_required
 def authorize_pocket(request):
     resp = requests.post(POCKET_REQUEST_ENDPOINT, data={
         'consumer_key': settings.POCKET_CONSUMER_KEY,
-        'redirect_uri': request.build_absolute_uri(reverse('web_oauth2cb')),
+        'redirect_uri': build_absolute_uri(reverse('web_oauth2cb')),
     }, headers={'X-Accept': 'application/json'})
     resp.raise_for_status()
     request.session['pocket_request_token'] = resp.json()['code']
 
-    redirect_uri = request.build_absolute_uri(
+    redirect_uri = build_absolute_uri(
         reverse('powerapp_pocket:authorize_pocket_done'))
     auth_uri = extend_qs(POCKET_AUTHORIZE_ENDPOINT,
                          request_token=request.session['pocket_request_token'],

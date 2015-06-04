@@ -2,7 +2,7 @@
 import requests
 from logging import getLogger
 from django.conf import settings
-from powerapp.celery import app
+from powerapp.celery_local import app
 from powerapp.core.models import Integration, OAuthToken
 from powerapp.core.todoist_utils import extract_urls
 from powerapp_pocket.views import POCKET_ADD_URL_ENDPOINT
